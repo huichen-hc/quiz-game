@@ -68,9 +68,9 @@ body {
 }
 
 .correct{
-    background-color: green;
+    background-color: rgb(86, 127, 86);
 }
 
 .wrong{
-    background-color: red;
+    background-color: rgb(155, 56, 56);
 }
