@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz game</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz game</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div class="quiz-container">
-  <h1>Quiz Game</h1>
-  <div class="score-container">
-    <p id="score">Score: 0/10</p>
-  </div>
-  <div class="questions-container">
-    <p id="question">Lodaing...<br>Please refresh the page</p>
-  </div>
+  <div class="quiz-container">
+    <h1>Quiz Game</h1>
+    <div class="score-container">
+      <p id="score">Score: 0/10</p>
+    </div>
+    <div class="questions-container">
+      <p id="question">Lodaing...<br>Please refresh the page</p>
+    </div>
     <div class="answers-container">
       <button class="option-btn" id="option1"></button>
       <button class="option-btn" id="option2"></button>
@@ -22,10 +24,11 @@
       <button class="option-btn" id="option4"></button>
     </div>
     <p id="feedback"></p>
-  <button id="next-btn">Next</button>
-</div>
+    <button id="next-btn">Next</button>
+    <button id="restart-btn" style="display: none;">Restart</button>
+  </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

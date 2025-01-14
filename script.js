@@ -9,8 +9,10 @@ const option4 = document.getElementById("option4");
 const feedback = document.getElementById("feedback");
 const scoreDisplay = document.getElementById("score");
 const nextBtn = document.getElementById("next-btn");
+const restartBtn = document.getElementById("restart-btn");
 
-const apiUrl = "https://opentdb.com/api.php?amount=10&category=27&difficulty=medium&type=multiple";
+const apiUrl =
+  "https://opentdb.com/api.php?amount=10&category=27&difficulty=medium&type=multiple";
 
 //Fetch the quiz data from the api
 async function fetchData() {
@@ -102,7 +104,7 @@ function renderNextQuestion() {
   });
 }
 
-//Allow users to click options and remove the classes for changing background colors
+//Make each question start with all option buttons enabled and remove the previous feedback text and classes
 function resetButtons() {
   const optionButtons = document.querySelectorAll(".option-btn");
   optionButtons.forEach((button) => {
@@ -113,15 +115,40 @@ function resetButtons() {
   feedback.innerHTML = "";
 }
 
-//After 10 questions, show the score results to users
+//After 10 questions, show the score results to users and the restart button
 function resultsDisplay() {
   const questionsContainer = document.querySelector(".questions-container");
   const answersContainer = document.querySelector(".answers-container");
-  questionsContainer.style.display = "none";
-  answersContainer.style.display = "none";
-  nextBtn.style.display = "none";
+  questionsContainer.classList.add("hidden");
+  answersContainer.classList.add("hidden");
+  nextBtn.classList.add("hidden");
   feedback.innerHTML = `Quiz finished! Your final score is  ${score}.`;
+
+  restartBtn.style.display = "block";
 }
+
+function restartQuiz() {
+//Reset variables and UI elements
+  score = 0;
+  currentQuestionIndex = 0;
+  questionsArray = [];
+  scoreDisplay.textContent = `Score: ${score}/10`;
+  feedback.innerHTML = "";
+  restartBtn.style.display = "none";
+
+  resetButtons();
+
+//Show the questions and answers containers,and the next button
+  const questionsContainer = document.querySelector(".questions-container");
+  const answersContainer = document.querySelector(".answers-container");
+  questionsContainer.classList.remove("hidden");
+  answersContainer.classList.remove("hidden");
+  nextBtn.classList.remove("hidden");
+
+  fetchData();
+}
+
+restartBtn.addEventListener("click", restartQuiz);
 
 //Initialize the game
 fetchData();

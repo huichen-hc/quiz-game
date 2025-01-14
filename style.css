@@ -7,7 +7,7 @@
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  background-color:  rgb(228, 218, 199);
+  background-color: rgb(228, 218, 199);
   min-height: 100vh;
   margin: 0;
   display: flex;
@@ -15,62 +15,82 @@ body {
   align-items: center;
 }
 
-.quiz-container{
-    padding: 2rem;
-    width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-    border:3px solid #A76D4D;
-    border-radius: 1rem;
-    h1{
-        font-size: 2rem;
-    }
+.quiz-container {
+  padding: 2rem;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  border: 3px solid #a76d4d;
+  border-radius: 1rem;
+  h1 {
+    font-size: 2rem;
+  }
 }
 
-.answers-container{
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+.answers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
-#next-btn{
-    margin-top: 0.8rem;
-    background-color:  #4E3B31;
-    border: none;
-    border-radius: 1rem;
-    color: white;
-    padding: 1rem 1rem;
-    cursor: pointer;
+.option-btn {
+  background-color: #a76d4d;
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  padding: 1rem 3rem;
+  display: inline-block;
+  font-size: 16px;
+  margin: 3px 2px;
+  cursor: pointer;
 }
 
-#next-btn:hover{
-    background-color: #4e3b31be;
+.option-btn:hover {
+  background-color: #a76d4dc3;
 }
 
-.option-btn{
-    background-color: #A76D4D;
-    border: none;
-    border-radius: 1rem;
-    color: white;
-    padding: 1rem 3rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+#next-btn {
+  margin-top: 0.8rem;
+  background-color: #7A4B3A;
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  padding: 1rem 1rem;
+  cursor: pointer;
 }
 
-.option-btn:hover{
+#next-btn:hover {
+  background-color:#7a4b3ac3;
+}
+
+#restart-btn {
+  background-color: #a76d4d;
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  padding: 0.8rem;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#restart-btn:hover {
     background-color: #a76d4dc3;
+  }
+
+.correct {
+  background-color: rgb(86, 127, 86);
 }
 
-.correct{
-    background-color: rgb(86, 127, 86);
+.wrong {
+  background-color: rgb(155, 56, 56);
 }
 
-.wrong{
-    background-color: rgb(155, 56, 56);
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
 }
