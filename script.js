@@ -22,6 +22,7 @@ async function fetchData() {
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
+    //Store the fetched api data in a global variable
     questionsArray = data.results;
     loadQuestion();
   } catch (error) {
@@ -56,7 +57,6 @@ function loadQuestion() {
     option3.innerHTML = randomAllOptions[2];
     option4.innerHTML = randomAllOptions[3];
 
-    console.log(correctOption);
     handleOptionClick(correctOption);
   }
 }
