@@ -11,13 +11,14 @@ const scoreDisplay = document.getElementById("score");
 const nextBtn = document.getElementById("next-btn");
 const restartBtn = document.getElementById("restart-btn");
 
-const apiUrl =
+// either use the string directly in the fetch call or store it in a variable, best practice to store a url is in capital letters
+const API_URL =
   "https://opentdb.com/api.php?amount=10&category=27&difficulty=medium&type=multiple";
 
 //Fetch the quiz data from the api
 async function fetchData() {
   try {
-    const response = await fetch(apiUrl);
+    const response = await fetch(API_URL);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -27,6 +28,7 @@ async function fetchData() {
     loadQuestion();
   } catch (error) {
     console.error("Error in fetchData: ", error);
+    // this will propagate the error, which means you need to handle a rejected promise where fetchData is called
     throw error;
   }
 }
@@ -43,21 +45,24 @@ function shuffleArray(array) {
 //Function to load each question and set the answer to random options
 function loadQuestion() {
   if (currentQuestionIndex < questionsArray.length) {
-    const questionData = questionsArray[currentQuestionIndex];
-    const questionText = questionData.question;
-    const correctOption = questionData.correct_answer;
-    const incorrectOptionsArray = questionData.incorrect_answers;
+    // simplify the code by destructuring the object, rename question variable since it already exists
+    const {
+      question: questionText,
+      correct_answer,
+      incorrect_answers,
+    } = questionsArray[currentQuestionIndex];
 
-    let allOptions = [...incorrectOptionsArray, correctOption];
-    const randomAllOptions = shuffleArray(allOptions);
+    // shuffle array of options and save directly to a variable
+    const allOptions = shuffleArray([...incorrect_answers, correct_answer]);
 
-    question.innerHTML = questionText;
-    option1.innerHTML = randomAllOptions[0];
-    option2.innerHTML = randomAllOptions[1];
-    option3.innerHTML = randomAllOptions[2];
-    option4.innerHTML = randomAllOptions[3];
+    // textContent is better than innerHTML for security reasons
+    question.textContent = questionText;
+    // use an array to loop through the options for readability
+    [option1, option2, option3, option4].forEach((option, index) => {
+      option.textContent = allOptions[index];
+    });
 
-    handleOptionClick(correctOption);
+    handleOptionClick(correct_answer);
   }
 }
 
@@ -72,12 +77,15 @@ function handleOptionClick(correctOption) {
       button.classList.remove("correct", "wrong");
 
       if (buttonText === correctOption) {
-        score += 1;
+        // can increment the score directly
+        score++;
         scoreDisplay.textContent = `Score: ${score}/10`;
-        feedback.innerHTML = "Correct!";
+        // textContent is better than innerHTML for security reasons
+        feedback.textContent = "Correct!";
         button.classList.add("correct");
       } else {
-        feedback.innerHTML = `Wrong! The correct answer is ${correctOption}.`;
+        // textContent is better than innerHTML for security reasons
+        feedback.textContent = `Wrong! The correct answer is ${correctOption}.`;
         button.classList.add("wrong");
       }
       optionButtons.forEach((button) => {
@@ -94,13 +102,12 @@ function renderNextQuestion() {
   nextBtn.disabled = true;
 
   nextBtn.addEventListener("click", () => {
-    if (currentQuestionIndex < questionsArray.length - 1) {
-      currentQuestionIndex += 1;
-      loadQuestion();
-      resetButtons();
-    } else {
-      resultsDisplay();
-    }
+    // can be simplified for readability with ternary operator and refactored
+    currentQuestionIndex < questionsArray.length - 1
+      ? // increments the currenctQuestionIndex and then calls the loadQuestion function with the new value
+        loadQuestion(++currentQuestionIndex)
+      : resultsDisplay();
+    resetButtons();
   });
 }
 
@@ -112,37 +119,37 @@ function resetButtons() {
     button.classList.remove("correct", "wrong");
   });
   nextBtn.disabled = true;
-  feedback.innerHTML = "";
+  // textContent is better than innerHTML for security reasons
+  feedback.textContent = "";
 }
 
 //After 10 questions, show the score results to users and the restart button
 function resultsDisplay() {
-  const questionsContainer = document.querySelector(".questions-container");
-  const answersContainer = document.querySelector(".answers-container");
-  questionsContainer.classList.add("hidden");
-  answersContainer.classList.add("hidden");
+  // can be simplified with
+  document.querySelector(".questions-container").classList.add("hidden");
+  document.querySelector(".answers-container").classList.add("hidden");
   nextBtn.classList.add("hidden");
-  feedback.innerHTML = `Quiz finished! Your final score is  ${score}.`;
-
+  // textContent is better than innerHTML for security reasons
+  feedback.textContent = `Quiz finished! Your final score is  ${score}.`;
   restartBtn.style.display = "block";
 }
 
 function restartQuiz() {
-//Reset variables and UI elements
+  //Reset variables and UI elements
   score = 0;
   currentQuestionIndex = 0;
   questionsArray = [];
   scoreDisplay.textContent = `Score: ${score}/10`;
-  feedback.innerHTML = "";
+  // textContent is better than innerHTML for security reasons
+  feedback.textContent = "";
   restartBtn.style.display = "none";
 
   resetButtons();
 
-//Show the questions and answers containers,and the next button
-  const questionsContainer = document.querySelector(".questions-container");
-  const answersContainer = document.querySelector(".answers-container");
-  questionsContainer.classList.remove("hidden");
-  answersContainer.classList.remove("hidden");
+  //Show the questions and answers containers,and the next button
+  // can be simplified with
+  document.querySelector(".questions-container").classList.remove("hidden");
+  document.querySelector(".answers-container").classList.remove("hidden");
   nextBtn.classList.remove("hidden");
 
   fetchData();
